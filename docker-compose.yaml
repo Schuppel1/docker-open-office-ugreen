@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  collabora:
+    image: collabora/code:latest
+    container_name: nextcloud-collabora-temp
+    restart: unless-stopped
+    mem_limit: 4g
+    shm_size: "256m"
+    environment:
+      - domain=${COLLABORA_DOMAIN}
+      - username=${COLLABORA_ADMIN_USER}
+      - password=${COLLABORA_ADMIN_PASSWORD}
+      - extra_params=${COLLABORA_EXTRA_PARAMS}
+      - VIRTUAL_HOST=${COLLABORA_VIRTUAL_HOST}
+      - LETSENCRYPT_HOST=${COLLABORA_LETSENCRYPT_HOST}
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+    expose:
+      - "9980"
+    networks:
+      - web
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+networks:
+  web:
+    external: true
+    name: web
