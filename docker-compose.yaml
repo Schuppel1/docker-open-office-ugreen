@@ -1,9 +1,7 @@
-version: "3.8"
-
 services:
   collabora:
     image: collabora/code:latest
-    container_name: nextcloud-collabora-temp
+    container_name: collabora
     restart: unless-stopped
     mem_limit: 4g
     shm_size: "256m"
@@ -11,7 +9,7 @@ services:
       - domain=${COLLABORA_DOMAIN}
       - username=${COLLABORA_ADMIN_USER}
       - password=${COLLABORA_ADMIN_PASSWORD}
-      - extra_params=${COLLABORA_EXTRA_PARAMS}
+      - extra_params=${COLLABORA_EXTRA_PARAMS:---o:ssl.enable=false --o:ssl.termination=true}
       - VIRTUAL_HOST=${COLLABORA_VIRTUAL_HOST}
       - LETSENCRYPT_HOST=${COLLABORA_LETSENCRYPT_HOST}
       - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
